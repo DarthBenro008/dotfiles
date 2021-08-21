@@ -1,0 +1,184 @@
+# Alacritty Config
+
+env:
+  # TERM variable
+  #
+  # This value is used to set the `$TERM` environment variable for
+  # each instance of Alacritty. If it is not present, alacritty will
+  # check the local terminfo database and use `alacritty` if it is
+  # available, otherwise `xterm-256color` is used.
+  TERM: xterm-256color
+
+# Window Resize
+window:
+  # Window dimensions (changes require restart)
+  #
+  # Specified in number of columns/lines, not pixels. If both are zero this
+  # setting is ignored.
+  size: 99
+  padding:
+    x: 2
+    y: 2
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+   x: 0
+   y: 0
+
+  dynamic_padding: true
+  startup_mode: Maximized
+  decorations: None
+font:
+  normal:
+      family: JetBrainsMono Nerd Font
+background_opacity: 0.94
+
+# Shell Terminal
+shell:
+   program: zsh
+# Colors (Tender)
+schemes:
+  Tender: &tender 
+    primary:
+      background: '0x282828'
+      foreground: '0xeeeeee'
+
+    # Normal colors
+    normal:
+      black:   '0x282828'
+      red:     '0xf43753'
+      green:   '0xc9d05c'
+      yellow:  '0xffc24b'
+      blue:    '0xb3deef'
+      magenta: '0xd3b987'
+      cyan:    '0x73cef4'
+      white:   '0xeeeeee'
+
+    # Bright colors
+    bright:
+      black:   '0x4c4c4c'
+      red:     '0xf43753'
+      green:   '0xc9d05c'
+      yellow:  '0xffc24b'
+      blue:    '0xb3deef'
+      magenta: '0xd3b987'
+      cyan:    '0x73cef4'
+      white:   '0xfeffff'
+  Nord: &nord
+  primary:
+    background: '0x2E3440'
+    foreground: '0xD8DEE9'
+
+  # Normal colors
+  normal:
+    black:   '0x3B4252'
+    red:     '0xBF616A'
+    green:   '0xA3BE8C'
+    yellow:  '0xEBCB8B'
+    blue:    '0x81A1C1'
+    magenta: '0xB48EAD'
+    cyan:    '0x88C0D0'
+    white:   '0xE5E9F0'
+
+  # Bright colors
+  bright:
+    black:   '0x4C566A'
+    red:     '0xBF616A'
+    green:   '0xA3BE8C'
+    yellow:  '0xEBCB8B'
+    blue:    '0x81A1C1'
+    magenta: '0xB48EAD'
+    cyan:    '0x8FBCBB'
+    white:   '0xECEFF4'
+  OneDark: &one
+    primary:
+      background: '#282c34'
+      foreground: '#abb2bf'
+    cursor:
+      text:       CellBackground
+      cursor:     '#528bff' # syntax-cursor-color
+    selection:
+      text:       CellForeground
+      background: '#3e4451' # syntax-selection-color
+    normal:
+      black:      '#5c6370' # mono-3
+      red:        '#e06c75' # red 1
+      green:      '#98c379'
+      yellow:     '#e5c07b' # orange 2
+      blue:       '#61afef'
+      magenta:    '#c678dd'
+      cyan:       '#56b6c2'
+      white:      '#828997' # mono-2
+  OneHalfDark: &onehalfdark
+    primary:
+      background: '0x282c34'
+      foreground: '0xdcdfe4'
+
+    normal:
+      black: '0x282c34'
+      red: '0xe06c75'
+      green: '0x98c379'
+      yellow: '0xe5c07b'
+      blue: '0x61afef'
+      magenta: '0xc678dd'
+      cyan: '0x56b6c2'
+      white: '0xdcdfe4'
+
+    bright:
+      black: '0x282c34'
+      red: '0xe06c75'
+      green: '0x98c379'
+      yellow: '0xe5c07b'
+      blue: '0x61afef'
+      magenta: '0xc678dd'
+      cyan: '0x56b6c2'
+      white: '0xdcdfe4'
+  AyuMirage: &ayu
+    primary:
+      background: '#1f2430'
+      foreground: '#cbccc6'
+      bright_foreground: '#f28779'
+
+    # Normal colors
+    normal:
+      black:   '#212733' #
+      red:     '#f08778' #
+      green:   '#53bf97' #
+      yellow:  '#fdcc60' #
+      blue:    '#60b8d6' # 
+      magenta: '#ec7171' #
+      cyan:    '#98e6ca' #
+      white:   '#fafafa' #
+
+    # Brightened
+    bright:
+      black: '#686868'
+      red: '#f58c7d'
+      green: '#58c49c'
+      yellow: '#ffd165'
+      blue: '#65bddb'
+      magenta: '#f17676'
+      cyan: '#9debcf'
+      white: '#ffffff'
+
+colors: *ayu
+
+key_bindings:
+    # (Windows, Linux, and BSD only)
+  - { key: V,         mods: Control|Shift, action: Paste                       }
+  - { key: C,         mods: Control|Shift, action: Copy                        }
+  - { key: Insert,    mods: Shift,         action: PasteSelection              }
+  - { key: Key0,      mods: Control,       action: ResetFontSize               }
+  - { key: Equals,    mods: Control,       action: IncreaseFontSize            }
+  - { key: Plus,      mods: Control,       action: IncreaseFontSize            }
+  - { key: Minus,     mods: Control,       action: DecreaseFontSize            }
+  - { key: F11,       mods: None,          action: ToggleFullscreen            }
+  - { key: Paste,     mods: None,          action: Paste                       }
+  - { key: Copy,      mods: None,          action: Copy                        }
+  - { key: L,         mods: Control,       action: ClearLogNotice              }
+  - { key: L,         mods: Control,       chars: "\x0c"                       }
+  - { key: PageUp,    mods: None,          action: ScrollPageUp,   mode: ~Alt  }
+  - { key: PageDown,  mods: None,          action: ScrollPageDown, mode: ~Alt  }
+  - { key: Home,      mods: Shift,         action: ScrollToTop,    mode: ~Alt  }
+  - { key: End,       mods: Shift,         action: ScrollToBottom, mode: ~Alt  }

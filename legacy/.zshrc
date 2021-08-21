@@ -10,11 +10,12 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/benro/.oh-my-zsh"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="agnoster"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -51,8 +52,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
-# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -76,11 +75,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf)
+plugins=(git docker docker-compose)
 
 source $ZSH/oh-my-zsh.sh
-
-# Source various completions
 
 # User configuration
 
@@ -105,41 +102,9 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias vim="nvim"
-alias zshrc="nvim ~/.zshrc"
-alias alarc="nvim ~/.alacritty.yml"
-alias vimrc="nvim ~/.config/nvim/init.vim"
-alias tmuxrc="nvim ~/.tmux.conf"
-alias ohmyzsh="nvim ~/.oh-my-zsh"
-alias gop="cd $HOME/go/src/"
-
-# Fedora Specific
-alias dstart="sudo systemctl start docker"
-alias sstart="sudo systemctl start"
-alias adb="/home/benro/Android/Sdk/platform-tools/adb"
-# bindkey ' 	' autosuggest-accept
-
+alias zshconfig="nano ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Sourcing - The below commands make zsh slow, refer to lazy loading below
-#kubectl completion zsh > "${fpath[1]}/_kubectl"
-#source <(kubectl completion zsh)
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-# Exporting 
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/home/benro/flutter/bin
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Lazy Loaders - For faster ZSH Startup times
-kubectl () {
-    command kubectl $*
-    if [[ -z $KUBECTL_COMPLETE ]]
-    then
-        source <(command kubectl completion zsh)
-        KUBECTL_COMPLETE=1 
-    fi
-}
 
