@@ -9,7 +9,8 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/benro/.oh-my-zsh"
+export ZSH="/Users/benro/.oh-my-zsh"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -29,14 +30,13 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -51,9 +51,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
-# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
-# COMPLETION_WAITING_DOTS="true"
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -76,11 +77,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf)
+plugins=(git fzf macos dotenv)
 
 source $ZSH/oh-my-zsh.sh
-
-# Source various completions
 
 # User configuration
 
@@ -105,41 +104,40 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias vim="nvim"
 alias zshrc="nvim ~/.zshrc"
-alias alarc="nvim ~/.alacritty.yml"
-alias vimrc="nvim ~/.config/nvim/init.vim"
-alias tmuxrc="nvim ~/.tmux.conf"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
-alias gop="cd $HOME/go/src/"
-
-# Fedora Specific
-alias dstart="sudo systemctl start docker"
-alias sstart="sudo systemctl start"
-alias adb="/home/benro/Android/Sdk/platform-tools/adb"
-# bindkey ' 	' autosuggest-accept
-
+alias zshso="source ~/.zshrc"
+alias vimrc="nvim ~/.config/nvim/init.vim"
+alias vim="nvim"
+alias logi="killall LogiMgrDaemon"
+alias gtg="cd ~/gitworks"
+alias gtt="cd ~/testing"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export GPG_TTY=$TTY
+export PATH="$PATH:`pwd`/flutter/bin"
+# export GO_PATH=~/go
+# export PATH=$PATH:/$GO_PATH/bin
+export PATH="/Users/benro/.deno/bin:$PATH"
 
-# Sourcing - The below commands make zsh slow, refer to lazy loading below
-#kubectl completion zsh > "${fpath[1]}/_kubectl"
-#source <(kubectl completion zsh)
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
-# Exporting 
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/home/benro/flutter/bin
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Lazy Loaders - For faster ZSH Startup times
-kubectl () {
-    command kubectl $*
-    if [[ -z $KUBECTL_COMPLETE ]]
-    then
-        source <(command kubectl completion zsh)
-        KUBECTL_COMPLETE=1 
-    fi
-}
+# Added by GDK bootstrap
+source /Users/benro/.asdf/asdf.sh
+unsetopt autocd
+export PATH="/opt/homebrew/opt/icu4c/bin:$PATH"
+export PATH="/opt/homebrew/opt/icu4c/sbin:$PATH"
 
+[ -f "/Users/benro/.ghcup/env" ] && source "/Users/benro/.ghcup/env" # ghcup-env
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="/Users/benro/.nvm/versions/node/v16.13.0/lib/node_modules:$PATH"
+
+# bun completions
+[ -s "/Users/benro/.bun/_bun" ] && source "/Users/benro/.bun/_bun"
+
+# bun
+export BUN_INSTALL="/Users/benro/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
