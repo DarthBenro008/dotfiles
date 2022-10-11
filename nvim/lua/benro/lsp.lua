@@ -7,7 +7,6 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
-
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -22,7 +21,14 @@ local on_attach = function(client, bufnr)
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, bufopts)
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', '<leader>fr', vim.lsp.buf.formatting, bufopts)
+    vim.keymap.set('n', '<leader>fr', vim.lsp.buf.format, bufopts)
+
+    if client.name == "tsserver" then
+        client.server_capabilities.documentFormattingProvider = false -- 0.8 and later
+    end
+    if client.name == "eslint" then
+        client.server_capabilities.documentFormattingProvider = true -- 0.8 and later
+    end
 end
 
 local lsp_flags = {
@@ -31,8 +37,7 @@ local lsp_flags = {
 
 local lspconfig = require('lspconfig')
 
-local servers = { 'rust_analyzer', 'tsserver', 'sumneko_lua', 'pyright', 'gopls', 'clangd', 'eslint', 'taplo', 'yamlls'
-}
+local servers = { 'rust_analyzer', 'eslint', 'tsserver', 'sumneko_lua', 'pyright', 'gopls', 'clangd', 'taplo', 'yamlls' }
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
         capabilities = capabilities,
@@ -40,6 +45,9 @@ for _, lsp in ipairs(servers) do
         flags = lsp_flags,
     }
 end
+
+
+
 
 -- lsp signature
 cfg = {} -- add you config here
@@ -150,5 +158,10 @@ vim.lsp.handlers["window/showMessage"] = function(err, method, params, client_id
     vim.notify(method.message, severity[params.type])
 end
 
--- For format on save
-vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()]]
+-- format on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    callback = function()
+        vim.lsp.buf.format()
+    end,
+})
